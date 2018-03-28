@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styles from "./App.css";
-import Person from "./Person/Person";
+import Person from '../Components/Persons/Person/Person';
 import { ID } from "./Utils/randomID";
 
 class App extends Component {
@@ -26,7 +26,7 @@ class App extends Component {
   };
 
   nameChangedHandler = (event, id) => {
-    const personIndex = this.state.persons.findIndex(p => p.id === id);
+    const personIndex = this.state.persons.findIndex(p => p.asdf === id);
 
     const person = {
       ...this.state.persons[personIndex]
@@ -41,23 +41,22 @@ class App extends Component {
   };
 
   render() {
-
     let persons = null;
-    let btnClass = '';
-
+    let btnClass = "";
 
     if (this.state.showPersons) {
       persons = (
         <div>
           {this.state.persons.map((person, index) => {
             return (
-              <Person
-                key={person.id}
-                name={person.name}
-                age={person.age}
-                click={() => this.deletePersonHandler(index)}
-                changed={event => this.nameChangedHandler(event, person.id)}
-              />
+              <ErrorBoundary key={person.id}>
+                <Person
+                  name={person.name}
+                  age={person.age}
+                  click={() => this.deletePersonHandler(index)}
+                  changed={event => this.nameChangedHandler(event, person.id)}
+                />
+              </ErrorBoundary>
             );
           })}
         </div>
@@ -86,4 +85,4 @@ class App extends Component {
   }
 }
 
-export default (App);
+export default App;
